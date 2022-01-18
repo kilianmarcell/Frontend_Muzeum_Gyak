@@ -21,6 +21,7 @@
         <td>{{ statue.created_at }}</td>
         <td>{{ statue.updated_at }}</td>
         <td><button @click="deleteStatue(statue.id)">X</button></td>
+        <td><button @click="editStatue(statue.id)">Edit</button></td>
       </tr>
       <tr>
         <td><input type="hidden" v-model="statue.id"></td>
@@ -40,6 +41,7 @@
 
 export default {
   name: 'App',
+
   data() {
     return {
       statues: [],
@@ -53,6 +55,7 @@ export default {
       }
     }
   },
+
   methods: {
     async loadData() {
       let response = await fetch("http://127.0.0.1:8000/api/statues")
@@ -75,6 +78,20 @@ export default {
       this.resetForm()
     },
 
+    async deleteStatue(id) {
+      await fetch(`http://127.0.0.1:8000/api/statues/${id}`, {
+        method: 'DELETE'
+      })
+      await this.loadData()
+    },
+    
+    async editStatue(id) {
+      this.add_new = true
+      let response = await fetch(`http://127.0.0.1:8000/api/statues/${id}`)
+      let data = await response.json()
+      this.statue = {...data}
+    },
+
     async saveStatue() {
       this.saving = 'disabled'
       await fetch(`http://127.0.0.1:8000/api/statues/${this.statue.id}`, {
@@ -94,13 +111,17 @@ export default {
       this.resetForm()
     },
 
-    async deleteStatue(id) {
-      await fetch(`http://127.0.0.1:8000/api/statues/${id}`, {
-        method: 'DELETE'
-      })
-      await this.loadData()
+    resetForm() {
+      this.statue = {
+        id: null,
+        person: '',
+        height: null,
+        price: null
+      },
+      this.add_new = false
     }
   },
+
   mounted() {
     this.loadData()
   }
