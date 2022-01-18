@@ -20,6 +20,7 @@
         <td>{{ statue.price }}</td>
         <td>{{ statue.created_at }}</td>
         <td>{{ statue.updated_at }}</td>
+        <td><button @click="deleteStatue(statue.id)">X</button></td>
       </tr>
       <tr>
         <td><input type="hidden" v-model="statue.id"></td>
@@ -55,7 +56,6 @@ export default {
   methods: {
     async loadData() {
       let response = await fetch("http://127.0.0.1:8000/api/statues")
-      //let data = await response.json()
       this.statues = await response.json()
     },
 
@@ -77,7 +77,7 @@ export default {
 
     async saveStatue() {
       this.saving = 'disabled'
-      await fetch(`http://127.0.0.1:8000/api/paintings/${this.statue.id}`, {
+      await fetch(`http://127.0.0.1:8000/api/statues/${this.statue.id}`, {
         method: 'PATCH',
         headers: {
           'Content-Type' : 'application/json',
@@ -92,6 +92,13 @@ export default {
 
     cancelStatue() {
       this.resetForm()
+    },
+
+    async deleteStatue(id) {
+      await fetch(`http://127.0.0.1:8000/api/statues/${id}`, {
+        method: 'DELETE'
+      })
+      await this.loadData()
     }
   },
   mounted() {
