@@ -1,1 +1,2 @@
 vue create vueAppNev
+cd vueAppNev
