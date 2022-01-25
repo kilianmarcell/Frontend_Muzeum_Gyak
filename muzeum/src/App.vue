@@ -1,21 +1,19 @@
 <template>
   <div id="app">
-    <Paintings/>
-    <Statues/>
+    <router-link to="/">Paintings</router-link>
+    <router-link to="/statues">Statues</router-link>
+    <router-view></router-view>
   </div>
 </template>
 <script>
-import Paintings from './components/Paintings.vue';
-import Statues from './components/Statues.vue';
 
 export default {
   name: 'App',
   components: {
-    Paintings,
-    Statues
 },
   data() {
     return {
+      state: 'Paintings'
       }
     },
   }
