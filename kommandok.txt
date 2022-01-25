@@ -1,2 +1,4 @@
 vue create vueAppNev
 cd vueAppNev
+npm install (ha nincs függőség)
+npm run serve
