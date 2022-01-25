@@ -4,6 +4,7 @@ import VueRouter from 'vue-router'
 
 import Paintings from './components/Paintings.vue';
 import Statues from './components/Statues.vue';
+import Statue from './components/Statue.vue';
 import Info from './components/Info.vue';
 
 Vue.use(VueRouter) //ez a plugin
@@ -14,6 +15,10 @@ const routes = [
     {
         path: '/statues',
         components: Statues
+    },
+    {
+        path: '/statues/:id',
+        components: Statue
     },
     {
         path: '/paintings',
